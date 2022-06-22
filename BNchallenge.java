@@ -9,7 +9,7 @@ import java.util.Random;
  */
 public class BNchallenge {
 
-    //Calculate the shortest path from start to end
+    //Calculate the shortest path from start to end BFS
     public void shortestPath(int[][] matrix, int[] start, int[] end){
         int sx = start[0], sy = start[1];
         int dx = end[0], dy = end[1];
