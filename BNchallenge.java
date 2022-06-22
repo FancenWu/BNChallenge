@@ -1,9 +1,7 @@
 package com.example.bnchallenge;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 import java.util.LinkedList;
+import java.util.Random;
 
 /**
  * @author Fancen Wu
@@ -11,7 +9,7 @@ import java.util.LinkedList;
  */
 public class BNchallenge {
 
-
+    //Calculate the shortest path from start to end
     public void shortestPath(int[][] matrix, int[] start, int[] end){
         int sx = start[0], sy = start[1];
         int dx = end[0], dy = end[1];
@@ -50,6 +48,9 @@ public class BNchallenge {
             visit(points, queue, p.x, p.y+1, p);
 
             visit(points, queue, p.x+1, p.y+1, p);
+
+            visit(points, queue, p.x-1, p.y+1, p);
+
         }
 
         if(dest == null){
@@ -94,56 +95,32 @@ public class BNchallenge {
                 {1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
         };
+
+        int[][] matrix1 = new int[10][10];
+        Random r = new Random();
+        for(int i = 0; i < 10; i++){
+            for(int j = 0; j < 10; j++){
+                if((i ==0 && j == 0) || (i == 9 && j == 9)) {
+                    matrix1[i][j] = 1;
+                }else if((i==9&&j==7)||(i==8&&j==7)||(i==6&&j==7)||(i==6&&j==8)){
+                    matrix1[i][j] = 0;
+                }else{
+                    matrix1[i][j] = r.nextInt(2);
+                }
+                System.out.print(matrix1[i][j]+" ");
+            }
+            System.out.println();
+        }
+
         int [] start = {0,0};
         int [] end = {9,9};
         BNchallenge bn = new BNchallenge();
-        bn.shortestPath(matrix, start, end);
+        bn.shortestPath(matrix1, start, end);
     }
 
 }
 
-/**
- * A class to create a 2D grid based on columns and rows
- */
-class Grid{
-
-    private int cols;
-    private int rows;
-    private SimpleIntegerProperty[] [] grid;
-
-    public Grid(int cols, int rows){
-        this.cols = cols;
-        this.rows = rows;
-
-        grid = new SimpleIntegerProperty[cols][rows];
-
-        for(int y = 0; y < rows; y++){
-            for(int x = 0; x < cols; x++){
-                grid[x][y] = new SimpleIntegerProperty(0);
-            }
-        }
-    }
-
-    //return a value for a certain point
-    public IntegerProperty getPointValue(int x, int y){
-        return grid[x][y];
-    }
-
-    //Change the value of a point
-    public void setPointValue(int x, int y, int value){
-        grid[x][y].set(value);
-    }
-
-    public int get(int x, int y){
-        try{
-            return  grid[x][y].get();
-        }catch (ArrayIndexOutOfBoundsException e){
-            return -1;
-        }
-    }
-
-}
-
+//Class to generate a certain point
 class Point {
     int x;
     int y;
